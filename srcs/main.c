@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/15 21:39:36 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:45:27 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	args_valid(int argc, char **argv)
 
 void	*philo_funtion(void *arg)
 {
-	int	id;
+	t_data	*data;
 
-	id = *(int *)arg;
+	data = arg;
 	while (1)
-		printf("Philo %d is thinking!\n", id);
+		printf("Philo %d is thinking!\n", data->np);
 }
 
 void	get_philosophers(t_data *data)
@@ -75,7 +75,7 @@ void	get_philosophers(t_data *data)
 	i = 0;
 	while (i < data->np)
 	{
-		pthread_create(&data->philo[i].id, NULL, philo_funtion, &i);
+		pthread_create(&data->philo[i].id, NULL, philo_funtion, data);
 		i++;
 	}
 	return ;
