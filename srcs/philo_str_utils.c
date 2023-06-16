@@ -1,16 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   philo_str_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/16 10:03:59 by zvandeven         #+#    #+#             */
-/*   Updated: 2023/04/27 16:37:08 by zvan-de-         ###   ########.fr       */
+/*   Created: 2023/06/15 18:10:49 by zvan-de-          #+#    #+#             */
+/*   Updated: 2023/06/15 18:47:27 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../includes/philosophers.h"
+
+int	ft_strisdigit(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	putstr_exit(char *str, int fd)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] != '\0')
+		write(fd, &str[i], 1);
+	exit(fd);
+}
 
 long int	ft_atol(const char *nptr)
 {

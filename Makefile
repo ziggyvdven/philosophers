@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/06/15 13:53:32 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/06/15 18:24:14 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,22 +40,20 @@ SRCS			= $(addprefix $(SRCS_PATH), $(SRCS_FILES))
 SRCS_BONUS		= $(addprefix $(SRCS_PATH), $(SRCS_BONUS_FILES))
 
 # Includes
-HEADERS			= -I ./include -I $(LIBFT)/include
+HEADERS			= -I ./include
 
 # library and source files
-LIBFT			= ./libs/libft
-LIBS			= $(LIBFT)/libft.a 
-SRCS_FILES		= main.c \
+SRCS_FILES		= main.c philo_str_utils.c\
 
 					
 #------------------------------------------------------------------------------#
 #                                 RULES                                        #
 #------------------------------------------------------------------------------#
 
-all: libft $(NAME) 
+all: $(NAME) 
 
 $(NAME): $(OBJS_PATH) $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(HEADERS)
 		@echo "$(G)\n -- $(NAME) made 🐙 --$(RT)"
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c 
@@ -64,20 +62,14 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 $(OBJS_PATH):
 	@mkdir -p $(OBJS_PATH)
 	
-libft:
-	@echo "$(G)\n -- LOADING --$(RT)"
-	@$(MAKE) -C $(LIBFT)
-
 bonus: 
 	@$(MAKE) "NAME=$(NAME_BONUS)" "OBJS=$(OBJS_BONUS)" "SRCS_FILES=$(SRCS_BONUS_FILES)" "SRCS_PATH=$(BONUS_PATH)"
 
 clean:
 	@rm -rf $(OBJS) $(OBJS_PATH)
-	@$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(MAKE) -C $(LIBFT) fclean
 
 re: fclean all
 
