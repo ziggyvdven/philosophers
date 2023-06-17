@@ -22,7 +22,7 @@ NAME 			= philosophers
 
 # Compiler and flags
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -Wunreachable-code -Ofast -g
+CFLAGS			= -Wall -Wextra -g -pthread
 
 # others
 RM				= rm -f

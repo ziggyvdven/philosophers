@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:43:36 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/15 21:01:36 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:46:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@
 # include	<sys/time.h>
 # include	<pthread.h>
 
+typedef struct s_data t_data;
+
 typedef struct s_philo
 {
 	pthread_t	id;
+	t_data		*data;
+	int			name;
 }				t_philo;
 
 typedef struct s_data
@@ -35,6 +39,7 @@ typedef struct s_data
 	int			tte;
 	int			tts;
 	int			ntp;
+	int			*forks;
 	t_philo		philo[];
 }				t_data;
 
