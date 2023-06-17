@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:43:36 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/16 19:46:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/06/17 16:08:49 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,38 @@
 # include	<sys/time.h>
 # include	<pthread.h>
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
 	pthread_t	id;
+	int			state;
 	t_data		*data;
-	int			name;
+	int			n;
 }				t_philo;
 
 typedef struct s_data
 {
-	int			np;
-	int			ttd;
-	int			tte;
-	int			tts;
-	int			ntp;
-	int			*forks;
-	t_philo		philo[];
+	int					np;
+	int					ttd;
+	int					tte;
+	int					tts;
+	int					ntp;
+	pthread_mutex_t		*forks;
+	t_philo				philo[];
 }				t_data;
 
+/*PHILOSOPHERS*****************************************************************/
+void				*philo_funtion(void *param);
 
-/*CHECKS*********************************/
+/*INITS************************************************************************/
+pthread_mutex_t		*make_forks(t_data *data);
+t_data				*init_data(int argc, char **argv);
+void				get_philosophers(t_data *data);
 
-/*UTILS*********************************/
-int			ft_strisdigit(char *str);
-void		putstr_exit(char *str, int fd);
-long int	ft_atol(const char *nptr);
+/*UTILS************************************************************************/
+int					ft_strisdigit(char *str);
+void				putstr_exit(char *str, int fd);
+long int			ft_atol(const char *nptr);
 
 #endif

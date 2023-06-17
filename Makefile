@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/06/15 18:24:14 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/06/17 13:32:01 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ SRCS_BONUS		= $(addprefix $(SRCS_PATH), $(SRCS_BONUS_FILES))
 HEADERS			= -I ./include
 
 # library and source files
-SRCS_FILES		= main.c philo_str_utils.c\
+SRCS_FILES		= main.c philo_str_utils.c init_philo.c philosophers.c\
 
 					
 #------------------------------------------------------------------------------#
