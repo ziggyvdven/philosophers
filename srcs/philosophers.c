@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:31:18 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/28 19:26:18 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:46:23 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long	get_time(void)
 	return (milliseconds);
 }
 
-long	ft_eat(t_data *data, t_philo *philo)
+void	ft_eat(t_data *data, t_philo *philo)
 {
 	philo->state = 1;
 	pthread_mutex_lock(&data->forks[philo->n]);
@@ -34,11 +34,11 @@ long	ft_eat(t_data *data, t_philo *philo)
 		get_time() - data->start_time, philo->n + 1);
 	printf("%lu Philo %d is eating!\n", 
 		get_time() - data->start_time, philo->n + 1);
-	usleep(data->tte);
+	philo->start_eat = get_time();
+	while ((get_time() - philo->start_eat) >= data->tte);
 	philo->ate++;
 	pthread_mutex_unlock(&data->forks[philo->n]);
 	pthread_mutex_unlock(&data->forks[(philo->n + 1) % data->np]);
-	return (get_time());
 }
 
 long	ft_sleep(t_data *data, t_philo *philo)
@@ -52,9 +52,9 @@ long	ft_sleep(t_data *data, t_philo *philo)
 
 void	ft_think(t_philo *philo)
 {
+	philo->state = 0;
 	printf("%lu Philo %d is thinking!\n", get_time() - philo->data->start_time,
 		philo->n + 1);
-	philo->state = 0;
 }
 
 void	*philo_funtion(void *param)
@@ -68,19 +68,17 @@ void	*philo_funtion(void *param)
 	start_sleep = 0;
 	while (1 && philo->is_dead == 0)
 	{
-		// if ((get_time() - philo->time_ate) >= data->ttd)
-		// 	break ;
+		if (philo->is_dead || (philo->ate >= data->ntp && data->ntp))
+			break ;
 		if (data->philo[(philo->n + (data->np - 1)) % data->np].state != 1
 			&& data->philo[(philo->n + 1) % data->np].state != 1
 			&& data->philo[philo->n].state == 0)
-			philo->time_ate = ft_eat(data, philo);
-		if (philo->state == 1)
+			ft_eat(data, philo);
+		if (philo->state == 1 && !philo->is_dead)
 			start_sleep = ft_sleep(data, philo);
 		if (get_time() - start_sleep >= data->tts
-			&& data->philo[philo->n].state == 2)
+			&& data->philo[philo->n].state == 2 && !philo->is_dead)
 			ft_think(philo);
 	}
-	// printf("%lu  Philosopher %d died\n", get_time() - data->start_time,
-	// 	philo->n + 1);
 	return (NULL);
 }

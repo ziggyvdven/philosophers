@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:43:36 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/28 15:14:52 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:18:48 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct s_philo
 	int			ate;
 	int			state;
 	int			is_dead;
+	int			satisfied;
 	t_data		*data;
-	long		time_ate;
+	long		start_eat;
 	int			n;
 }				t_philo;
 
@@ -43,6 +44,7 @@ typedef struct s_data
 	int					tte;
 	int					tts;
 	int					ntp;
+	int					dead;
 	long				start_time;
 	pthread_mutex_t		*forks;
 	t_philo				philo[];

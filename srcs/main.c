@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/28 19:25:32 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:20:08 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,24 @@ static void	wait_philo(t_data *d)
 	int	ate_enough;
 
 	ate_enough = 0;
-	while (ate_enough < d->np)
+	while (ate_enough <= d->np)
 	{
 		i = -1;
 		while (++i < d->np)
 		{
-			if ((get_time() - d->philo[i].time_ate) >= d->ttd && d->philo[i].state != 4)
+			if ((get_time() - d->philo[i].start_eat) >= d->ttd
+				&& !d->philo[i].is_dead)
 			{
+				d->philo[i].is_dead = 1;
 				printf("%lu  Philosopher %d died\n", get_time() - d->start_time,
 					d->philo[i].n + 1);
-				d->philo[i].is_dead = 1;
+				return ;
 			}
-			if (d->philo[i].ate == d->ntp)
+			if (d->philo[i].ate == d->ntp && d->ntp && !d->philo[i].satisfied)
+			{
+				d->philo[i].satisfied = 1;
 				ate_enough++;
+			}
 		}
 	}
 }
@@ -69,7 +74,12 @@ int	main(int argc, char **argv)
 	data = init_data(argc, argv);
 	get_philosophers(data);
 	wait_philo(data);
-	while (i <= data->np)
-		pthread_join(data->philo[i++].id, NULL);
+	i = -1;
+	printf("times they need to eat = %d\n", data->ntp);
+	while (++i < data->np)
+		printf("Philosopher %d ate %d times\n", data->philo[i].n + 1, data->philo[i].ate);
+	// while (i <= data->np)
+	// 	pthread_join(data->philo[i++].id, NULL);
+	printf("all satisfied\n");
 	return (0);
 }

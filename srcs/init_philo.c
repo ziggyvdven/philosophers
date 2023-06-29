@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:28:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/28 19:20:29 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:19:28 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_data	*init_data(int argc, char **argv)
 	data->philo[0] = init_philo(data);
 	data->forks = make_forks(data);
 	data->start_time = get_time();
+	data->dead = 0;
 	return (data);
 }
 
@@ -45,8 +46,9 @@ t_philo	init_philo(t_data *data)
 		data->philo[i].n = i;
 		data->philo[i].data = data;
 		data->philo[i].state = 0;
-		data->philo[i].time_ate = get_time();
+		data->philo[i].start_eat = get_time();
 		data->philo[i].ate = 0;
+		data->philo[i].satisfied = 0;
 		i++;
 	}
 	return (data->philo[0]);
@@ -77,6 +79,6 @@ pthread_mutex_t	*make_forks(t_data *data)
 		putstr_exit("Unable to malloc forks", 1);
 	while (i < data->np)
 		pthread_mutex_init(&forks[i++], NULL);
-	printf("FORKS: %d\n", i);
+	// printf("FORKS: %d\n", i);
 	return (forks);
 }
