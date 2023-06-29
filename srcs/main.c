@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/17 13:31:37 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:25:32 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,42 @@ void	args_valid(int argc, char **argv)
 	return ;
 }
 
+static void	wait_philo(t_data *d)
+{
+	int	i;
+	int	ate_enough;
+
+	ate_enough = 0;
+	while (ate_enough < d->np)
+	{
+		i = -1;
+		while (++i < d->np)
+		{
+			if ((get_time() - d->philo[i].time_ate) >= d->ttd && d->philo[i].state != 4)
+			{
+				printf("%lu  Philosopher %d died\n", get_time() - d->start_time,
+					d->philo[i].n + 1);
+				d->philo[i].is_dead = 1;
+			}
+			if (d->philo[i].ate == d->ntp)
+				ate_enough++;
+		}
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
+	int		i;
 
+	i = 0;
 	if (argc < 5 || argc > 6)
 		putstr_exit("INVALID ARGUMENTS\n", 1);
 	args_valid(argc, argv);
 	data = init_data(argc, argv);
 	get_philosophers(data);
-	pthread_join(data->philo[0].id, NULL);
-	printf("%d\n", data->np);
-	printf("%d\n", data->ttd);
-	printf("%d\n", data->tte);
-	printf("%d\n", data->tts);
-	printf("%d\n", data->ntp);
+	wait_philo(data);
+	while (i <= data->np)
+		pthread_join(data->philo[i++].id, NULL);
 	return (0);
 }

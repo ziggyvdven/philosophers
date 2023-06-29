@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:28:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/17 18:41:14 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:20:29 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 t_data	*init_data(int argc, char **argv)
 {
 	t_data		*data;
-	static int	i = 0;
 
-	data = (t_data *)malloc((sizeof(t_data)) + (int)ft_atol(argv[1])
-			* sizeof(t_philo));
+	data = (t_data *)malloc((sizeof(t_data)) + ((int)ft_atol(argv[1])
+				* sizeof(t_philo)));
 	if (!data)
 		return (NULL);
 	data->np = (int)ft_atol(argv[1]);
@@ -29,16 +28,28 @@ t_data	*init_data(int argc, char **argv)
 		data->ntp = (int)ft_atol(argv[5]);
 	else
 		data->ntp = 0;
+	data->philo[0] = init_philo(data);
+	data->forks = make_forks(data);
+	data->start_time = get_time();
+	return (data);
+}
+
+t_philo	init_philo(t_data *data)
+{
+	int	i;
+
+	i = 0;
 	while (i < data->np)
 	{
 		data->philo[i].id = 0;
 		data->philo[i].n = i;
 		data->philo[i].data = data;
 		data->philo[i].state = 0;
+		data->philo[i].time_ate = get_time();
+		data->philo[i].ate = 0;
 		i++;
 	}
-	data->forks = make_forks(data);
-	return (data);
+	return (data->philo[0]);
 }
 
 void	get_philosophers(t_data *data)
@@ -69,4 +80,3 @@ pthread_mutex_t	*make_forks(t_data *data)
 	printf("FORKS: %d\n", i);
 	return (forks);
 }
-

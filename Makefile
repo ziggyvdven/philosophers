@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/06/17 13:32:01 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/06/28 14:29:40 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,13 @@ G	= \033[0;32m
 #------------------------------------------------------------------------------#
 
 # Program name
-NAME 			= philosophers
+NAME 			= philo
 
 # Compiler and flags
 CC				= gcc
-CFLAGS			= -Wall -Wextra -g -pthread
+CFLAGS			= -Wall -Wextra -g 
+
+# -pthread -fsanitize=thread
 
 # others
 RM				= rm -f
