@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "/Users/zvan-de-/42cursus/philo/philo",
-			"args": ["4", "310", "200" ,"100"],
+			"args": ["5", "410", "200" ,"200", "10"],
 			"stopAtEntry": false,
 			"cwd": "/Users/zvan-de-/42cursus/philo/",
 			"environment": [],

@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/06/28 14:29:40 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/06/29 21:23:33 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,8 @@ NAME 			= philo
 
 # Compiler and flags
 CC				= gcc
-CFLAGS			= -Wall -Wextra -g 
-
-# -pthread -fsanitize=thread
+CFLAGS			= -Wall -Wextra -g -pthread
+# -fsanitize=thread
 
 # others
 RM				= rm -f
@@ -46,6 +45,7 @@ HEADERS			= -I ./include
 
 # library and source files
 SRCS_FILES		= main.c philo_str_utils.c init_philo.c philosophers.c\
+					free_data.c\
 
 					
 #------------------------------------------------------------------------------#

@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:43:36 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/28 21:18:48 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/06/29 21:27:59 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,21 @@ typedef struct s_data
 	int					tts;
 	int					ntp;
 	int					dead;
+	int					end;
 	long				start_time;
 	pthread_mutex_t		*forks;
 	t_philo				philo[];
 }				t_data;
 
 /*PHILOSOPHERS*****************************************************************/
-void				*philo_funtion(void *param);
+void				*philo_life(void *param);
+void				return_threads(t_data *data);
 
 /*INITS************************************************************************/
 pthread_mutex_t		*make_forks(t_data *data);
 t_data				*init_data(int argc, char **argv);
 void				get_philosophers(t_data *data);
-t_philo				init_philo(t_data *data);
+t_philo				init_philo(t_data *data, int i);
 
 /*UTILS************************************************************************/
 int					ft_strisdigit(char *str);
