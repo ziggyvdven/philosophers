@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:31:18 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/18 14:53:25 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:32:44 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ void	ft_eat(t_philo *philo)
 
 void	ft_stop_eat(t_env *env, t_philo *philo, int left, int right)
 {
+	print_state("is sleeping", philo);
 	ft_release_fork(env, philo, left);
 	ft_release_fork(env, philo, right);
 	philo->eating = false;
 	philo->sleeping = true;
 	philo->start_eat = 0;
+	philo->n_forks = 0;
 }
 
 void	ft_check_eat(t_env *env, t_philo *philo, long time)
@@ -69,27 +71,22 @@ void	ft_check_eat(t_env *env, t_philo *philo, long time)
 	int		right;
 
 	(void) time;
-	left = philo->id;
-	right = (philo->id + 1) % env->nop;
-	if (!ft_try_fork(env, left))
+	left = philo->id - 1;
+	right = (philo->id) % env->nop;
+	if (!ft_try_fork(env, left) && !philo->eating && !ft_check_end(env))
 		ft_take_fork(env, philo, left);
-	if (env->nop > 1 && !ft_try_fork(env, right))
+	if (env->nop > 1 && !ft_try_fork(env, right) && !philo->eating && !ft_check_end(env))
 		ft_take_fork(env, philo, right);
 	if (philo->n_forks > 1)
 		ft_eat(philo);
 	else if (time - philo->start_eat >= env->tte && philo->thinking == false)
 		ft_stop_eat(env, philo, left, right);
-	pthread_mutex_unlock(&env->forks[left]->fork);
-	pthread_mutex_unlock(&env->forks[right]->fork);
 }
 
 long	ft_sleep(t_env *env, t_philo *philo, long int timer)
 {
 	if (philo->start_slp == 0 && philo->sleeping)
-	{
 		philo->start_slp = timer;
-		print_state("is sleeping", philo);
-	}
 	else if (timer - philo->start_slp >= env->tts)
 	{
 		philo->sleeping = false;
@@ -100,6 +97,32 @@ long	ft_sleep(t_env *env, t_philo *philo, long int timer)
 	return (get_time());
 }
 
+void	ft_end_data(t_env *env, t_philo *philo)
+{
+	pthread_mutex_lock(&env->end_lock);
+	if (env->to_full > 0)
+	{
+		if (philo->t_eat >= env->to_full)
+			env->philos_full++;
+	}
+	else 
+		env->end = true;
+	pthread_mutex_unlock(&env->end_lock);
+	return ;
+}
+
+int	ft_check_end(t_env *env)
+{
+	int i;
+
+	i = 0;
+	pthread_mutex_lock(&env->end_lock);
+	if (env->end)
+		i = 1;
+	pthread_mutex_unlock(&env->end_lock);
+	return (i);
+}
+
 void	*ft_philo_life(void *param)
 {
 	t_philo			*philo;
@@ -108,8 +131,10 @@ void	*ft_philo_life(void *param)
 
 	philo = (t_philo *) param;
 	env = (t_env *) philo->env;
-	if (philo->id % 2)
-		usleep(1000);
+	time = get_time();
+	philo->t_to_die = time + env->ttd;
+	if (philo->id % 2 || philo->id == 1)
+		usleep(100000);
 	while (1)
 	{
 		time = get_time();
@@ -117,8 +142,22 @@ void	*ft_philo_life(void *param)
 			ft_sleep(env, philo, time);
 		else if (philo->thinking || philo->eating)
 			ft_check_eat(env, philo, time);
-		// if (philo->t_to_die - time <= 0)
-		// 	break ;
+		if (philo->t_to_die - time <= 0)
+		{
+			print_state("has died", philo);
+			break ;
+		}
+		if (env->to_full > 0)
+		{
+			if (philo->t_eat >= env->to_full)
+				break ;
+		}
+		if (ft_check_end(env))
+			break ;
 	}
+	ft_release_fork(env, philo, philo->id - 1);
+	ft_release_fork(env, philo, (philo->id) % env->nop);
+	printf("philo %d got out\n", philo->id);
+	ft_end_data(env, philo);
 	return (NULL);
 }

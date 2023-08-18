@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/18 14:28:39 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:39:44 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,24 @@ int	main(int argc, char **argv)
 	ft_let_the_hungergames_begin(env);
 	while(1)
 	{	
+		pthread_mutex_lock(&env->end_lock);
+			if (env->end == true )
+			{
+				printf("test\n");
+				break ;
+			}
+			if (env->philos_full >= env->nop)
+			{
+				printf("all satisfied!\n");
+				break;
+			}
+		pthread_mutex_unlock(&env->end_lock);
+	}
+	usleep(1000);
+	while (i < env->nop - 1)
+	{
+		pthread_join(env->table[i]->thread, NULL);
+		i++;
 	}
 	return (0);
 }

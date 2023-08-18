@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/08/18 14:25:26 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/08/18 16:35:58 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ NAME 			= philo1
 
 # Compiler and flags
 CC				= gcc
-CFLAGS			= -Wall -Werror -Wextra -g -pthread 
-# -fsanitize=thread
+CFLAGS			= -Wall -Werror -Wextra -g -pthread -fsanitize=thread
 
 # others
 RM				= rm -f
