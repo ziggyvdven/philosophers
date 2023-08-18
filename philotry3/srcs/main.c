@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/17 12:17:15 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/18 14:28:39 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,55 +33,61 @@ void	args_valid(char **argv)
 	return ;
 }
 
-static void	wait_philo(t_data *d)
+// static void	wait_philo(t_data *d)
+// {
+// 	int	i;
+// 	int	ate_enough;
+
+// 	ate_enough = 0;
+// 	while (ate_enough < d->np)
+// 	{
+// 		i = -1;
+// 		while (++i < d->np)
+// 		{
+// 			if ((get_time() - d->philo[i].start_eat) >= d->ttd
+// 				&& !d->philo[i].is_dead)
+// 			{
+// 				d->philo[i].is_dead = 1;
+// 				printf("%lu %d died\n", get_time() - d->start_time,
+// 					d->philo[i].n + 1);
+// 				return ;
+// 			}
+// 			if (d->philo[i].ate == d->ntp && d->ntp && !d->philo[i].satisfied)
+// 			{
+// 				d->philo[i].satisfied = 1;
+// 				ate_enough++;
+// 			}
+// 		}
+// 	}
+// }
+void	ft_let_the_hungergames_begin(t_env *env)
 {
 	int	i;
-	int	ate_enough;
 
-	ate_enough = 0;
-	while (ate_enough < d->np)
+	i = 0;
+	while (i < env->nop)
 	{
-		i = -1;
-		while (++i < d->np)
-		{
-			if ((get_time() - d->philo[i].start_eat) >= d->ttd
-				&& !d->philo[i].is_dead)
-			{
-				d->philo[i].is_dead = 1;
-				printf("%lu %d died\n", get_time() - d->start_time,
-					d->philo[i].n + 1);
-				return ;
-			}
-			if (d->philo[i].ate == d->ntp && d->ntp && !d->philo[i].satisfied)
-			{
-				d->philo[i].satisfied = 1;
-				ate_enough++;
-			}
-		}
+		pthread_create(&env->table[i]->thread, NULL, ft_philo_life,
+			env->table[i]);
+		i++;
 	}
+	return ;
 }
+
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_env	*env;
 	int		i;
 
 	i = 0;
 	if (argc < 5 || argc > 6)
 		putstr_exit("INVALID ARGUMENTS\n", 1);
 	args_valid(argv);
-	data = init_data(argc, argv);
-	get_philosophers(data);
-	wait_philo(data);
-	data->end = 1;
-	i = -1;
-	return_threads(data);
-	usleep(1000);
-	while (++i < data->np)
-		printf("Philospher %d ate %d times\n",
-			data->philo[i].n + 1, data->philo[i].ate);
-	printf("times they need to eat = %d\n", data->ntp);
-	free(data->forks);
-	free(data);
+	env = ft_init_data(argc, argv);
+	ft_let_the_hungergames_begin(env);
+	while(1)
+	{	
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:31:18 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/06/29 21:29:12 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:22:09 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,13 @@ void	*philo_life(void *param)
 	philo = param;
 	data = philo->data;
 	start_sleep = 0;
+	if (philo->n % 2)
+		usleep(1000);
 	while (!data->end)
 	{
 		if (philo->is_dead || (philo->ate >= data->ntp && data->ntp))
 			break ;
-		if (data->philo[(philo->n + (data->np - 1)) % data->np].state != 1
-			&& data->philo[(philo->n + 1) % data->np].state != 1
-			&& data->philo[philo->n].state == 0)
-			ft_eat(data, philo);
+		ft_eat(data, philo);
 		if (philo->state == 1 && !philo->is_dead && !data->end)
 			start_sleep = ft_sleep(data, philo);
 		if (data->philo[philo->n].state == 2 && !philo->is_dead && !data->end)
