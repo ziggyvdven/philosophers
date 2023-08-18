@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/18 18:39:44 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:41:07 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int argc, char **argv)
 			}
 		pthread_mutex_unlock(&env->end_lock);
 	}
-	usleep(1000);
+	usleep(10000000);
 	while (i < env->nop - 1)
 	{
 		pthread_join(env->table[i]->thread, NULL);
