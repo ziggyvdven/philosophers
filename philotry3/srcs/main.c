@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/18 18:41:07 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:04:37 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,15 @@ void	args_valid(char **argv)
 	return ;
 }
 
-// static void	wait_philo(t_data *d)
-// {
-// 	int	i;
-// 	int	ate_enough;
+void	end_and_free(t_env *env)
+{
+	int	i;
 
-// 	ate_enough = 0;
-// 	while (ate_enough < d->np)
-// 	{
-// 		i = -1;
-// 		while (++i < d->np)
-// 		{
-// 			if ((get_time() - d->philo[i].start_eat) >= d->ttd
-// 				&& !d->philo[i].is_dead)
-// 			{
-// 				d->philo[i].is_dead = 1;
-// 				printf("%lu %d died\n", get_time() - d->start_time,
-// 					d->philo[i].n + 1);
-// 				return ;
-// 			}
-// 			if (d->philo[i].ate == d->ntp && d->ntp && !d->philo[i].satisfied)
-// 			{
-// 				d->philo[i].satisfied = 1;
-// 				ate_enough++;
-// 			}
-// 		}
-// 	}
-// }
+	i = -1;
+	while (++i < env->nop)
+		pthread_join(env->table[i]->thread, NULL);
+}
+
 void	ft_let_the_hungergames_begin(t_env *env)
 {
 	int	i;
@@ -74,38 +56,28 @@ void	ft_let_the_hungergames_begin(t_env *env)
 	return ;
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_env	*env;
-	int		i;
 
-	i = 0;
 	if (argc < 5 || argc > 6)
 		putstr_exit("INVALID ARGUMENTS\n", 1);
 	args_valid(argv);
 	env = ft_init_data(argc, argv);
 	ft_let_the_hungergames_begin(env);
-	while(1)
-	{	
+	while (1)
+	{
 		pthread_mutex_lock(&env->end_lock);
-			if (env->end == true )
-			{
-				printf("test\n");
-				break ;
-			}
-			if (env->philos_full >= env->nop)
-			{
-				printf("all satisfied!\n");
-				break;
-			}
+		if (env->end == true)
+			break ;
+		if (env->philos_full >= env->nop)
+		{
+			printf("all satisfied!\n");
+			break ;
+		}
 		pthread_mutex_unlock(&env->end_lock);
 	}
-	usleep(10000000);
-	while (i < env->nop - 1)
-	{
-		pthread_join(env->table[i]->thread, NULL);
-		i++;
-	}
+	pthread_mutex_unlock(&env->end_lock);
+	end_and_free(env);
 	return (0);
 }

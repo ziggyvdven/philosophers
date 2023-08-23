@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:28:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/18 17:35:41 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 16:36:08 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 t_env	*ft_init_data(int argc, char **argv)
 {
 	t_env		*env;
-	int			i;
 
-	i = -1;
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);

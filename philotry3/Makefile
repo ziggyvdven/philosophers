@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/08/18 16:35:58 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/08/23 16:55:25 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ G	= \033[0;32m
 #------------------------------------------------------------------------------#
 
 # Program name
-NAME 			= philo1
+NAME 			= philo
 
 # Compiler and flags
 CC				= gcc
@@ -44,7 +44,7 @@ HEADERS			= -I ./include
 
 # library and source files
 SRCS_FILES		= main.c philo_str_utils.c init_philo.c philosophers.c\
-					free_data.c\
+					free_data.c eating_utils.c end_checks.c\
 
 					
 #------------------------------------------------------------------------------#

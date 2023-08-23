@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:43:36 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/18 18:28:41 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:03:36 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,35 @@ typedef struct s_env
 	t_philo			**table;
 }				t_env;
 
-
+/*FUNCTIONS********************************************************************/
 
 /*PHILOSOPHERS*****************************************************************/
-void				*ft_philo_life(void *param);
-void				ft_check_eat(t_env *env, t_philo *philo, long time);
+void			*ft_philo_life(void *param);
+void			ft_check_eat(t_env *env, t_philo *philo, long time);
+void			ft_philo_loop(t_env *env, t_philo *philo, long time);
+long			ft_sleep(t_env *env, t_philo *philo, long int timer);
+void			ft_check_eat(t_env *env, t_philo *philo, long time);
+void			ft_eat(t_philo *philo);
+
+/*Eating***********************************************************************/
+int				ft_try_fork(t_env *env, int side);
+void			ft_take_fork(t_env *env, t_philo *philo, int side);
+void			ft_release_fork(t_env *env, t_philo *philo, int side);
+void			ft_stop_eat(t_env *env, t_philo *philo, int left, int right);
+void			ft_eat(t_philo *philo);
 
 /*INITS************************************************************************/
-t_env				*ft_init_data(int argc, char **argv);
-void				place_philos(t_env *env);
-void				make_forks(t_env *env);
+t_env			*ft_init_data(int argc, char **argv);
+void			place_philos(t_env *env);
+void			make_forks(t_env *env);
 
 /*UTILS************************************************************************/
-int					ft_strisdigit(char *str);
-void				putstr_exit(char *str, int fd);
-long int			ft_atol(const char *nptr);
-long				get_time(void);
-void				print_state(char *str, t_philo *philo);
-int					ft_check_end(t_env *env);
+int				ft_strisdigit(char *str);
+void			putstr_exit(char *str, int fd);
+long int		ft_atol(const char *nptr);
+long			get_time(void);
+void			print_state(char *str, t_philo *philo);
+int				ft_check_end(t_env *env);
+void			ft_end_data(t_env *env, t_philo *philo);
 
 #endif
