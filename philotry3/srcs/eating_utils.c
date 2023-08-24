@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:46:14 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/23 17:00:24 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:27:01 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_try_fork(t_env *env, int side)
 	if (env->forks[side]->in_use)
 		i = 1;
 	pthread_mutex_unlock(&env->forks[side]->fork_try);
+	usleep(50);
 	return (i);
 }
 

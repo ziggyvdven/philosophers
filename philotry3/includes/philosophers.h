@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:43:36 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/23 17:03:36 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:12:12 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ long			get_time(void);
 void			print_state(char *str, t_philo *philo);
 int				ft_check_end(t_env *env);
 void			ft_end_data(t_env *env, t_philo *philo);
+void			end_and_free(t_env *env);
+void			exit_and_free(t_env *env, char *msg, int fd);
 
 #endif

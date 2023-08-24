@@ -6,24 +6,41 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 18:32:03 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/17 16:28:24 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:50:21 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-// void	return_threads(t_data *data)
-// {
-// 	int i;
+void	exit_and_free(t_env *env, char *msg, int fd)
+{
+	end_and_free(env);
+	putstr_exit(msg, fd);
+}
 
-// 	i = -1;
-// 	while (i < data->np)
-// 		pthread_join(data->philo[i++].id, NULL);
-// 	i = -1;
-// 	while (++i < data->np)
-// 	{
-// 		pthread_mutex_unlock(&data->forks[i]);
-// 		if (pthread_mutex_destroy(&data->forks[i]))
-// 			putstr_exit("ERROR DESTROYING FORKS", 1);
-// 	}
-// }
+void	end_and_free(t_env *env)
+{
+	int	i;
+
+	i = -1;
+	if (ft_check_end(env))
+		while (++i < env->nop)
+			pthread_join(env->table[i]->thread, NULL);
+	i = -1;
+	if (env->table)
+	{
+		while (++i < env->nop)
+		{
+			pthread_mutex_destroy(&env->forks[i]->fork);
+			pthread_mutex_destroy(&env->forks[i]->fork_try);
+			free(env->table[i]);
+			free(env->forks[i]);
+		}
+		free(env->forks);
+		free(env->table);
+	}
+	pthread_mutex_destroy(&env->print_lock);
+	pthread_mutex_destroy(&env->print_lock);
+	free(env);
+	return ;
+}

@@ -8,10 +8,10 @@
 			"name": "(lldb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/Users/zvan-de-/42cursus/philo/philo",
+			"program": "/Users/zvan-de-/42cursus/philo/philotry3/philo",
 			"args": ["5", "410", "200" ,"200", "10"],
 			"stopAtEntry": false,
-			"cwd": "/Users/zvan-de-/42cursus/philo/",
+			"cwd": "/Users/zvan-de-/42cursus/philo/philotry3",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"

@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:48:44 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/23 17:04:37 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:45:44 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@ void	args_valid(char **argv)
 	if (ft_atol(argv[1]) < 1)
 		putstr_exit("ERROR NOT ENOUGH PHILOSOPHERS\n", 1);
 	return ;
-}
-
-void	end_and_free(t_env *env)
-{
-	int	i;
-
-	i = -1;
-	while (++i < env->nop)
-		pthread_join(env->table[i]->thread, NULL);
 }
 
 void	ft_let_the_hungergames_begin(t_env *env)
@@ -73,6 +64,7 @@ int	main(int argc, char **argv)
 		if (env->philos_full >= env->nop)
 		{
 			printf("all satisfied!\n");
+			env->end = true;
 			break ;
 		}
 		pthread_mutex_unlock(&env->end_lock);

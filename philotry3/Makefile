@@ -6,7 +6,7 @@
 #    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/08/23 16:55:25 by zvan-de-         ###   ########.fr        #
+#    Updated: 2023/08/23 18:32:52 by zvan-de-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ G	= \033[0;32m
 #------------------------------------------------------------------------------#
 
 # Program name
-NAME 			= philo
+NAME 			= test
 
 # Compiler and flags
 CC				= gcc
@@ -43,7 +43,7 @@ SRCS_BONUS		= $(addprefix $(SRCS_PATH), $(SRCS_BONUS_FILES))
 HEADERS			= -I ./include
 
 # library and source files
-SRCS_FILES		= main.c philo_str_utils.c init_philo.c philosophers.c\
+SRCS_FILES		= main.c philo_utils.c init_philo.c philosophers.c\
 					free_data.c eating_utils.c end_checks.c\
 
 					

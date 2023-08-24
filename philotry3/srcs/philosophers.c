@@ -6,7 +6,7 @@
 /*   By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:31:18 by zvan-de-          #+#    #+#             */
-/*   Updated: 2023/08/23 17:02:36 by zvan-de-         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:36:12 by zvan-de-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_philo_loop(t_env *env, t_philo *philo, long time)
 			break ;
 		if (philo->t_to_die - time <= 0)
 		{
-			print_state("has died", philo);
+			print_state("died", philo);
 			break ;
 		}
 		if (env->to_full > 0)
