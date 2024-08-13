@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zvan-de- <zvan-de-@student.42.fr>          +#+  +:+       +#+         #
+#    By: zvandeven <zvandeven@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/14 13:45:36 by zvandeven         #+#    #+#              #
-#    Updated: 2023/08/23 18:32:52 by zvan-de-         ###   ########.fr        #
+#    Updated: 2024/08/13 14:30:15 by zvandeven        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME 			= test
 
 # Compiler and flags
 CC				= gcc
-CFLAGS			= -Wall -Werror -Wextra -g -pthread -fsanitize=thread
+CFLAGS			= -Wall -Werror -Wextra -g -pthread
 
 # others
 RM				= rm -f
